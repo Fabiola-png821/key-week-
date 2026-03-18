@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌾 El Mercado Rural - Curso Completo de Lectoescritura</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #2d3e50;
+        }
+
+        /* Pantalla de bienvenida */
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .welcome-content {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .welcome-icon {
+            font-size: 8rem;
+            margin-bottom: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        .welcome-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.8rem;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+        }
+
+        .welcome-hint {
+            font-size: 2rem;
+            background: rgba(255,255,255,0.2);
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            display: inline-block;
+        }
+
+        /* App principal */
+        #app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: none;
+        }
+
+        /* Header */
+        .app-header {
+            background: white;
+            border-radius: 30px;
+            padding: 1rem 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 3rem;
+            cursor: pointer;
+        }
+
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .header-icon {
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .header-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .progress-stars {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .star {
+            font-size: 2rem;
+            color: #ffd700;
+            filter: grayscale(0.5);
+            transition: all 0.3s ease;
+        }
+
+        .star.active {
+            filter: grayscale(0);
+            transform: scale(1.1);
+        }
+
+        /* Maestro virtual */
+        .virtual-teacher {
+            background: white;
+            border-radius: 30px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        .teacher-avatar {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .teacher-message {
+            flex: 1;
+            font-size: 1.5rem;
+            background: #f0f3ff;
+            padding: 1.5rem 2rem;
+            border-radius: 50px;
+            position: relative;
+        }
+
+        .teacher-message::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-right: 15px solid #f0f3ff;
+        }
+
+        .speak-indicator {
+            font-size: 2.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Contenedor principal */
+        .main-lesson-container {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Área de aprendizaje */
+        .learning-area {
+            background: white;
+            border-radius: 30px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .learning-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .lesson-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 2rem;
+            border-radius: 30px;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        .module-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        /* Visual principal */
+        .main-visual-container {
+            text-align: center;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .main-visual {
+            font-size: 12rem;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .visual-letter {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .visual-word {
+            font-size: 2.5rem;
+            background: #f0f3ff;
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            display: inline-block;
+        }
+
+        .pronunciation-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #28a745;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* Área de escritura */
+        .writing-area {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 3px dashed #667eea;
+        }
+
+        .writing-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .letter-trace {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .trace-example {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #667eea;
+            border: 3px solid #667eea;
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            background: white;
+        }
+
+        .canvas-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        #writing-canvas {
+            width: 100%;
+            height: 200px;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            background: white;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        .canvas-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .canvas-btn {
+            background: #f0f3ff;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .canvas-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Opciones */
+        .options-area {
+            margin: 2rem 0;
+        }
+
+        .options-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .option-item {
+            background: #f0f3ff;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .option-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .option-item.selected {
+            border-color: #667eea;
+            background: #e0e7ff;
+        }
+
+        .option-item.correct {
+            background: #28a745;
+            color: white;
+        }
+
+        .option-item.incorrect {
+            background: #dc3545;
+            color: white;
+        }
+
+        .option-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .option-text {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        /* Botones de acción */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            font-size: 2.5rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .action-btn.secondary {
+            background: #f0f3ff;
+            color: #667eea;
+        }
+
+        .action-btn.mic {
+            background: #28a745;
+        }
+
+        .action-btn.mic.recording {
+            background: #dc3545;
+            animation: pulse 1s infinite;
+        }
+
+        /* Área lateral */
+        .side-area {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Panel de módulos */
+        .modules-panel {
+            background: white;
+            border-radius: 30px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .panel-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .modules-grid.expanded {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .module-item {
+            background: #f0f3ff;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .module-item:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .module-item.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .module-item.completed {
+            background: #28a745;
+            color: white;
+        }
+
+        /* Panel de progreso */
+        .progress-panel {
+            background: white;
+            border-radius: 30px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .progress-overview {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .progress-stat {
+            text-align: center;
+            padding: 1rem;
+            background: #f0f3ff;
+            border-radius: 15px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .progress-bar-container {
+            background: #f0f3ff;
+            height: 20px;
+            border-radius: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-details {
+            font-size: 1rem;
+            color: #666;
+            text-align: center;
+        }
+
+        /* Panel de logros */
+        .achievements-panel {
+            background: white;
+            border-radius: 30px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+        }
+
+        .achievement-item {
+            text-align: center;
+            padding: 0.8rem;
+            background: #f0f3ff;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .achievement-item.unlocked {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .achievement-icon {
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .achievement-name {
+            font-size: 0.8rem;
+        }
+
+        /* Panel de refuerzo */
+        .reinforcement-panel {
+            background: white;
+            border-radius: 30px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .reinforcement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+        }
+
+        .reinforcement-item {
+            background: #f0f3ff;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .reinforcement-item:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .reinforcement-icon {
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .reinforcement-text {
+            font-size: 0.9rem;
+        }
+
+        /* Modal de ayuda */
+        .help-modal {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            display: none;
+            align-items: center;
+            gap: 1rem;
+            border: 3px solid #667eea;
+            z-index: 2000;
+        }
+
+        .help-modal.show {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        .help-icon {
+            font-size: 2rem;
+        }
+
+        .help-text {
+            font-size: 1.2rem;
+            color: #2d3e50;
+        }
+
+        /* Popup de logro */
+        .achievement-popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            display: none;
+            align-items: center;
+            gap: 1rem;
+            z-index: 2000;
+        }
+
+        .achievement-popup.show {
+            display: flex;
+            animation: slideIn 0.5s ease;
+        }
+
+        /* Modal de pronunciación */
+        .pronunciation-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 30px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            z-index: 3000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            min-width: 300px;
+        }
+
+        .pronunciation-modal.show {
+            display: flex;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: #667eea;
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+        }
+
+        .modal-mic {
+            font-size: 3rem;
+            color: #28a745;
+            animation: pulse 1.5s infinite;
+        }
+
+        .modal-result {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 15px;
+            width: 100%;
+        }
+
+        .modal-result.success {
+            background: #28a745;
+            color: white;
+        }
+
+        .modal-result.error {
+            background: #dc3545;
+            color: white;
+        }
+
+        .modal-progress {
+            width: 100%;
+            height: 10px;
+            background: #f0f3ff;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .modal-progress-bar {
+            height: 100%;
+            background: #667eea;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .modal-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 2500;
+        }
+
+        .modal-overlay.show {
+            display: block;
+        }
+
+        /* Animaciones */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translate(-50%, 100%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .main-lesson-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .options-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .main-visual {
+                font-size: 8rem;
+            }
+            
+            .action-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Pantalla de bienvenida -->
+    <div id="welcome-screen" onclick="startApp()">
+        <div class="welcome-content">
+            <div class="welcome-icon">🌾</div>
+            <div class="welcome-title">El Mercado Rural</div>
+            <div class="welcome-subtitle">Curso completo de lectura y escritura</div>
+            <div class="welcome-hint">👉 TOCA PARA COMENZAR</div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="modal-overlay" class="modal-overlay"></div>
+
+    <!-- Popup de logro -->
+    <div id="achievement-popup" class="achievement-popup">
+        <span>🏆</span>
+        <span id="achievement-message"></span>
+    </div>
+
+    <!-- Modal de ayuda -->
+    <div id="help-modal" class="help-modal">
+        <div class="help-icon">💡</div>
+        <div class="help-text" id="help-text">Pista: Busca la respuesta correcta</div>
+    </div>
+
+    <!-- Modal de pronunciación -->
+    <div id="pronunciation-modal" class="pronunciation-modal">
+        <div class="modal-title" id="modal-title">Pronuncia la letra</div>
+        <div class="modal-icon" id="modal-icon">🔊</div>
+        <div class="modal-mic" id="modal-mic">🎤</div>
+        <div class="modal-result" id="modal-result">Preparando...</div>
+        <div class="modal-progress">
+            <div class="modal-progress-bar" id="modal-progress-bar"></div>
+        </div>
+        <button class="modal-btn" onclick="stopRecording()" id="modal-btn">Comenzar</button>
+    </div>
+
+    <!-- App principal -->
+    <div id="app-container">
+        <!-- Header -->
+        <div class="app-header">
+            <div class="logo-area">
+                <div class="logo" onclick="speakText('Bienvenida al Mercado Rural')" onmouseenter="speakText('Logo de la aplicación')">🌾</div>
+                <div class="app-title">Curso de Lectura</div>
+            </div>
+            <div class="header-icons">
+                <div class="header-icon" onclick="showProgress()" onmouseenter="speakText('Mostrar progreso')">📊</div>
+                <div class="header-icon" onclick="showAchievements()" onmouseenter="speakText('Mostrar logros')">🏆</div>
+                <div class="header-icon" onclick="repeatLastMessage()" onmouseenter="speakText('Repetir instrucción')">🔄</div>
+                <div class="header-icon" onclick="toggleSound()" id="sound-icon" onmouseenter="speakText('Activar o desactivar sonido')">🔊</div>
+                <div class="progress-stars">
+                    <span class="star" id="star1" onmouseenter="speakText('Estrella de progreso')">⭐</span>
+                    <span class="star" id="star2" onmouseenter="speakText('Estrella de progreso')">⭐</span>
+                    <span class="star" id="star3" onmouseenter="speakText('Estrella de progreso')">⭐</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Maestro virtual -->
+        <div class="virtual-teacher" onclick="speakText(teacherMessage)" onmouseenter="speakText('Toca para escuchar al maestro')">
+            <div class="teacher-avatar">👩‍🏫</div>
+            <div class="teacher-message" id="teacher-message">
+                Bienvenida. Vamos a aprender a leer y escribir.
+            </div>
+            <div class="speak-indicator">🔊</div>
+        </div>
+
+        <!-- Contenedor principal -->
+        <div class="main-lesson-container">
+            <!-- Área de aprendizaje -->
+            <div class="learning-area">
+                <div class="learning-header">
+                    <div class="lesson-badge" id="module-badge" onclick="toggleModules()" onmouseenter="speakText('Módulo actual. Toca para ver todos los módulos')">Módulo 1</div>
+                    <div class="module-name" id="module-name">Las Vocales</div>
+                </div>
+
+                <!-- Visual principal -->
+                <div class="main-visual-container" onclick="speakLetterSound()" onmouseenter="speakText('Toca para escuchar el sonido')">
+                    <div class="main-visual" id="main-visual">🍎</div>
+                    <div class="visual-letter" id="visual-letter">A</div>
+                    <div class="visual-word" id="visual-word">MANZANA</div>
+                    <div class="pronunciation-badge" onclick="startPronunciation()" onmouseenter="speakText('Practicar pronunciación')">🎤 Practicar</div>
+                </div>
+
+                <!-- Área de escritura -->
+                <div class="writing-area">
+                    <div class="writing-title">
+                        <span>✍️ Practica escribir</span>
+                    </div>
+                    <div class="letter-trace">
+                        <div class="trace-example" id="trace-example" onmouseenter="speakText('Ejemplo de cómo escribir la letra')">A</div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="writing-canvas" width="500" height="200"></canvas>
+                        <div class="canvas-controls">
+                            <button class="canvas-btn" onclick="clearCanvas()" onmouseenter="speakText('Limpiar canvas')">🗑️ Limpiar</button>
+                            <button class="canvas-btn" onclick="checkWriting()" onmouseenter="speakText('Verificar escritura')">✅ Verificar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Opciones -->
+                <div class="options-area">
+                    <div class="options-title">
+                        <span>❓</span>
+                        <span>¿Qué letra es?</span>
+                    </div>
+                    <div class="options-grid" id="options-grid"></div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="checkAnswer()" onmouseenter="speakText('Verificar respuesta')">✅</button>
+                    <button class="action-btn secondary" onclick="askForHelp()" onmouseenter="speakText('Pedir ayuda')">❓</button>
+                    <button class="action-btn secondary" onclick="repeatLesson()" onmouseenter="speakText('Repetir lección')">🔄</button>
+                    <button class="action-btn secondary" onclick="nextLesson()" onmouseenter="speakText('Siguiente lección')">⏩</button>
+                    <button class="action-btn mic" id="mic-btn" onclick="startPronunciation()" onmouseenter="speakText('Practicar pronunciación')">🎤</button>
+                </div>
+            </div>
+
+            <!-- Área lateral -->
+            <div class="side-area">
+                <!-- Panel de módulos -->
+                <div class="modules-panel">
+                    <div class="panel-title" onclick="toggleModules()" onmouseenter="speakText('Toca para ver todos los módulos')">
+                        <span>📚</span>
+                        <span>Módulos del curso</span>
+                        <span id="modules-arrow">▼</span>
+                    </div>
+                    <div class="modules-grid" id="modules-grid"></div>
+                </div>
+
+                <!-- Progreso -->
+                <div class="progress-panel">
+                    <div class="panel-title" onclick="showProgress()" onmouseenter="speakText('Ver progreso detallado')">
+                        <span>📊</span>
+                        <span>Mi Progreso</span>
+                    </div>
+                    <div class="progress-overview">
+                        <div class="progress-stat" onclick="speakText(`Lecciones completadas: ${userData?.progreso?.leccionesCompletadas?.length || 0}`)" onmouseenter="speakText('Lecciones completadas')">
+                            <div class="stat-value" id="lessons-completed">0</div>
+                            <div class="stat-label">Lecciones</div>
+                        </div>
+                        <div class="progress-stat" onclick="speakText(`Respuestas correctas: ${userData?.estadisticas?.respuestasCorrectas || 0}`)" onmouseenter="speakText('Respuestas correctas')">
+                            <div class="stat-value" id="correct-count">0</div>
+                            <div class="stat-label">Aciertos</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container" onclick="speakProgress()" onmouseenter="speakText('Barra de progreso general')">
+                        <div class="progress-bar-fill" id="progress-bar" style="width: 0%;"></div>
+                    </div>
+                    <div class="progress-details" id="progress-details" onclick="speakText(this.textContent)" onmouseenter="speakText('Detalles del progreso')">
+                        Nivel 1 · 0% completado
+                    </div>
+                </div>
+
+                <!-- Logros -->
+                <div class="achievements-panel">
+                    <div class="panel-title" onclick="showAchievements()" onmouseenter="speakText('Ver todos los logros')">
+                        <span>🏆</span>
+                        <span>Logros</span>
+                    </div>
+                    <div class="achievements-grid" id="achievements-grid"></div>
+                </div>
+
+                <!-- Refuerzo -->
+                <div class="reinforcement-panel">
+                    <div class="panel-title" onclick="speakText('Lecciones de refuerzo')" onmouseenter="speakText('Lecciones para practicar')">
+                        <span>🔄</span>
+                        <span>Practicar</span>
+                    </div>
+                    <div class="reinforcement-grid" id="reinforcement-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== CURSO COMPLETO ====================
+        const curriculum = {
+            modulos: [
+                {
+                    nombre: "Las Vocales",
+                    lecciones: [
+                        { tipo: "vocal", letra: "A", palabra: "MANZANA", icono: "🍎", sonido: "La letra A suena A, como en Manzana", fonema: "A", opciones: ["A", "E", "I", "O"], iconos: ["🍎", "🐘", "🐜", "🐙"] },
+                        { tipo: "vocal", letra: "E", palabra: "ELEFANTE", icono: "🐘", sonido: "La letra E suena E, como en Elefante", fonema: "E", opciones: ["A", "E", "I", "O"], iconos: ["🍎", "🐘", "🐜", "🐙"] },
+                        { tipo: "vocal", letra: "I", palabra: "HORMIGA", icono: "🐜", sonido: "La letra I suena I, como en Hormiga", fonema: "I", opciones: ["A", "E", "I", "O"], iconos: ["🍎", "🐘", "🐜", "🐙"] },
+                        { tipo: "vocal", letra: "O", palabra: "PULPO", icono: "🐙", sonido: "La letra O suena O, como en Pulpo", fonema: "O", opciones: ["A", "E", "I", "O"], iconos: ["🍎", "🐘", "🐜", "🐙"] },
+                        { tipo: "vocal", letra: "U", palabra: "UVA", icono: "🍇", sonido: "La letra U suena U, como en Uva", fonema: "U", opciones: ["A", "E", "I", "U"], iconos: ["🍎", "🐘", "🐜", "🍇"] }
+                    ]
+                },
+                {
+                    nombre: "Consonantes Básicas",
+                    lecciones: [
+                        { tipo: "consonante", letra: "M", palabra: "MAMÁ", icono: "👩", sonido: "La letra M suena M, como en Mamá", fonema: "M", opciones: ["M", "P", "L", "S"], iconos: ["👩", "🍍", "📖", "☀️"] },
+                        { tipo: "consonante", letra: "P", palabra: "PAPÁ", icono: "👨", sonido: "La letra P suena P, como en Papá", fonema: "P", opciones: ["M", "P", "L", "S"], iconos: ["👩", "🍍", "📖", "☀️"] },
+                        { tipo: "consonante", letra: "L", palabra: "LUNA", icono: "🌙", sonido: "La letra L suena L, como en Luna", fonema: "L", opciones: ["M", "P", "L", "S"], iconos: ["👩", "🍍", "📖", "☀️"] },
+                        { tipo: "consonante", letra: "S", palabra: "SOL", icono: "☀️", sonido: "La letra S suena S, como en Sol", fonema: "S", opciones: ["M", "P", "L", "S"], iconos: ["👩", "🍍", "📖", "☀️"] },
+                        { tipo: "consonante", letra: "T", palabra: "TOMATE", icono: "🍅", sonido: "La letra T suena T, como en Tomate", fonema: "T", opciones: ["T", "P", "L", "S"], iconos: ["🍅", "🍍", "📖", "☀️"] }
+                    ]
+                },
+                {
+                    nombre: "Más Consonantes",
+                    lecciones: [
+                        { tipo: "consonante", letra: "N", palabra: "NARANJA", icono: "🍊", sonido: "La letra N suena N, como en Naranja", fonema: "N", opciones: ["N", "D", "C", "R"], iconos: ["🍊", "🦷", "🐱", "🐀"] },
+                        { tipo: "consonante", letra: "D", palabra: "DEDO", icono: "🖐️", sonido: "La letra D suena D, como en Dedo", fonema: "D", opciones: ["N", "D", "C", "R"], iconos: ["🍊", "🦷", "🐱", "🐀"] },
+                        { tipo: "consonante", letra: "C", palabra: "CASA", icono: "🏠", sonido: "La letra C suena C, como en Casa", fonema: "C", opciones: ["N", "D", "C", "R"], iconos: ["🍊", "🦷", "🐱", "🐀"] },
+                        { tipo: "consonante", letra: "R", palabra: "RATÓN", icono: "🐀", sonido: "La letra R suena R, como en Ratón", fonema: "R", opciones: ["N", "D", "C", "R"], iconos: ["🍊", "🦷", "🐱", "🐀"] },
+                        { tipo: "consonante", letra: "B", palabra: "BURRO", icono: "🐴", sonido: "La letra B suena B, como en Burro", fonema: "B", opciones: ["B", "D", "C", "R"], iconos: ["🐴", "🦷", "🐱", "🐀"] }
+                    ]
+                }
+            ]
+        };
+
+        // ==================== DATOS DEL USUARIO ====================
+        let userData = {
+            metadata: {
+                nombre: "Lupita",
+                fechaRegistro: new Date().toISOString(),
+                ultimaSesion: new Date().toISOString()
+            },
+            progreso: {
+                moduloActual: 0,
+                leccionActual: 0,
+                leccionesCompletadas: [],
+                modulosCompletados: [],
+                puntosExperiencia: 0,
+                nivelGeneral: 1
+            },
+            estadisticas: {
+                respuestasCorrectas: 0,
+                respuestasIncorrectas: 0,
+                ayudasPedidas: 0,
+                leccionesRepetidas: 0,
+                ejerciciosEscritura: 0,
+                practicasPronunciacion: 0,
+                escriturasCorrectas: 0,
+                escriturasIncorrectas: 0,
+                pronunciacionesCorrectas: 0,
+                pronunciacionesIncorrectas: 0,
+                letrasAprendidas: [],
+                palabrasAprendidas: []
+            },
+            historialEscritura: [],
+            historialPronunciacion: [],
+            logros: {
+                primeraLetra: false,
+                cincoCorrectas: false,
+                diezLecciones: false,
+                primeraEscritura: false,
+                primeraPronunciacion: false,
+                escrituraPerfecta: false,
+                pronunciacionPerfecta: false
+            },
+            preferencias: {
+                volumenVoz: 1.0,
+                velocidadVoz: 0.8,
+                sonidosActivados: true
+            }
+        };
+
+        // ==================== VARIABLES GLOBALES ====================
+        let currentModule = 0;
+        let currentLesson = 0;
+        let selectedOption = null;
+        let teacherMessage = "Bienvenida al curso completo. Vamos a aprender a leer y escribir.";
+        let soundEnabled = true;
+        
+        // Variables para canvas
+        let canvas;
+        let ctx;
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let currentPoints = [];
+        
+        // Variables para voz
+        let recognition;
+        let isRecording = false;
+
+        // ==================== FUNCIÓN PARA INICIAR ====================
+        function startApp() {
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('app-container').style.display = 'block';
+            
+            loadProgress();
+            initCanvas();
+            initSpeechRecognition();
+            
+            setTimeout(() => {
+                speakText("Bienvenida. Comenzaremos con las vocales.");
+            }, 500);
+            
+            loadLesson(currentModule, currentLesson);
+            initModulesGrid();
+            initReinforcementGrid();
+            updateAchievementsDisplay();
+            updateProgressDisplay();
+            updateStars();
+        }
+
+        // ==================== FUNCIONES DE VOZ ====================
+        function speakText(text) {
+            if (!soundEnabled) return;
+            
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'es-MX';
+                utterance.rate = userData.preferencias.velocidadVoz;
+                utterance.pitch = 1.1;
+                utterance.volume = userData.preferencias.volumenVoz;
+                
+                utterance.onstart = function() {
+                    document.querySelector('.speak-indicator').style.opacity = '1';
+                };
+                
+                utterance.onend = function() {
+                    document.querySelector('.speak-indicator').style.opacity = '0.5';
+                };
+                
+                window.speechSynthesis.speak(utterance);
+                
+                document.getElementById('teacher-message').textContent = text;
+                teacherMessage = text;
+            }
+        }
+
+        function speakLetterSound() {
+            const leccion = curriculum.modulos[currentModule].lecciones[currentLesson];
+            speakText(leccion.sonido);
+        }
+
+        function repeatLastMessage() {
+            userData.estadisticas.leccionesRepetidas++;
+            saveProgress();
+            speakText(teacherMessage);
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('sound-icon').textContent = soundEnabled ? '🔊' : '🔇';
+            userData.preferencias.sonidosActivados = soundEnabled;
+            saveProgress();
+        }
+
+        // ==================== FUNCIONES DE LECCIÓN ====================
+        function loadLesson(moduleIndex, lessonIndex) {
+            if (!curriculum.modulos[moduleIndex] || !curriculum.modulos[moduleIndex].lecciones[lessonIndex]) {
+                return;
+            }
+            
+            const modulo = curriculum.modulos[moduleIndex];
+            const leccion = modulo.lecciones[lessonIndex];
+            
+            currentModule = moduleIndex;
+            currentLesson = lessonIndex;
+            
+            document.getElementById('module-badge').textContent = `Módulo ${moduleIndex + 1}`;
+            document.getElementById('module-name').textContent = modulo.nombre;
+            document.getElementById('main-visual').textContent = leccion.icono;
+            document.getElementById('visual-letter').textContent = leccion.letra || leccion.palabra;
+            document.getElementById('visual-word').textContent = leccion.palabra;
+            document.getElementById('trace-example').textContent = leccion.letra || leccion.palabra.charAt(0);
+            
+            // Generar opciones
+            const optionsGrid = document.getElementById('options-grid');
+            optionsGrid.innerHTML = '';
+            
+            leccion.opciones.forEach((opcion, index) => {
+                const div = document.createElement('div');
+                div.className = 'option-item';
+                div.setAttribute('onclick', `selectOption(${index})`);
+                div.setAttribute('onmouseenter', `speakText('${opcion}')`);
+                div.innerHTML = `
+                    <div class="option-icon">${leccion.iconos[index]}</div>
+                    <div class="option-text">${opcion}</div>
+                `;
+                optionsGrid.appendChild(div);
+            });
+            
+            selectedOption = null;
+            document.querySelectorAll('.option-item').forEach(item => {
+                item.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            clearCanvas();
+            speakText(leccion.sonido);
+            
+            updateModulesGrid();
+            
+            userData.progreso.moduloActual = moduleIndex;
+            userData.progreso.leccionActual = lessonIndex;
+            saveProgress();
+        }
+
+        // ==================== FUNCIONES DE CANVAS ====================
+        function initCanvas() {
+            canvas = document.getElementById('writing-canvas');
+            if (!canvas) return;
+            
+            ctx = canvas.getContext('2d');
+            
+            ctx.strokeStyle = '#667eea';
+            ctx.lineWidth = 5;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            
+            canvas.addEventListener('touchstart', startDrawingTouch);
+            canvas.addEventListener('touchmove', drawTouch);
+            canvas.addEventListener('touchend', stopDrawing);
+            
+            clearCanvas();
+        }
+
+        function startDrawing(e) {
+            e.preventDefault();
+            isDrawing = true;
+            currentPoints = [];
+            
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            lastX = (e.clientX - rect.left) * scaleX;
+            lastY = (e.clientY - rect.top) * scaleY;
+            
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            currentPoints.push({ x: lastX, y: lastY });
+        }
+
+        function startDrawingTouch(e) {
+            e.preventDefault();
+            isDrawing = true;
+            currentPoints = [];
+            
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const touch = e.touches[0];
+            
+            lastX = (touch.clientX - rect.left) * scaleX;
+            lastY = (touch.clientY - rect.top) * scaleY;
+            
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            currentPoints.push({ x: lastX, y: lastY });
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            e.preventDefault();
+            
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+            
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            
+            currentPoints.push({ x, y });
+            
+            lastX = x;
+            lastY = y;
+        }
+
+        function drawTouch(e) {
+            if (!isDrawing) return;
+            e.preventDefault();
+            
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const touch = e.touches[0];
+            
+            const x = (touch.clientX - rect.left) * scaleX;
+            const y = (touch.clientY - rect.top) * scaleY;
+            
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            
+            currentPoints.push({ x, y });
+            
+            lastX = x;
+            lastY = y;
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function clearCanvas() {
+            if (!ctx) return;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            currentPoints = [];
+            
+            // Dibujar líneas guía
+            ctx.beginPath();
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            
+            ctx.moveTo(0, canvas.height - 30);
+            ctx.lineTo(canvas.width, canvas.height - 30);
+            ctx.stroke();
+            
+            ctx.moveTo(0, canvas.height - 80);
+            ctx.lineTo(canvas.width, canvas.height - 80);
+            ctx.stroke();
+            
+            ctx.setLineDash([]);
+            ctx.strokeStyle = '#667eea';
+            ctx.lineWidth = 5;
+        }
+
+        // ==================== RECONOCIMIENTO DE ESCRITURA ====================
+        // ==================== RECONOCIMIENTO DE ESCRITURA MEJORADO ====================
+// ==================== RECONOCIMIENTO DE ESCRITURA - SOLO FORMA, NO TAMAÑO ====================
+function checkWriting() {
+    if (currentPoints.length < 10) {
+        speakText("Dibuja la letra primero");
+        return;
+    }
+    
+    const leccion = curriculum.modulos[currentModule].lecciones[currentLesson];
+    const letraEsperada = leccion.letra || leccion.palabra;
+    
+    userData.estadisticas.ejerciciosEscritura++;
+    
+    // NORMALIZAR PUNTOS (ignorar tamaño y posición)
+    let minX = Math.min(...currentPoints.map(p => p.x));
+    let maxX = Math.max(...currentPoints.map(p => p.x));
+    let minY = Math.min(...currentPoints.map(p => p.y));
+    let maxY = Math.max(...currentPoints.map(p => p.y));
+    
+    let ancho = maxX - minX;
+    let alto = maxY - minY;
+    
+    // Si es demasiado pequeño (garabato), pedir que lo intente de nuevo
+    if (ancho < 20 || alto < 20) {
+        userData.estadisticas.escriturasIncorrectas++;
+        speakText("Dibuja la letra más grande, que se vea bien");
+        saveProgress();
+        return;
+    }
+    
+    // Normalizar puntos para ignorar el tamaño
+    let puntosNormalizados = currentPoints.map(p => ({
+        x: (p.x - minX) / ancho,
+        y: (p.y - minY) / alto
+    }));
+    
+    // Detectar cambios de dirección (trazos) - esto es independiente del tamaño
+    let cambiosDireccion = 0;
+    for (let i = 2; i < puntosNormalizados.length; i++) {
+        let dx1 = puntosNormalizados[i-1].x - puntosNormalizados[i-2].x;
+        let dy1 = puntosNormalizados[i-1].y - puntosNormalizados[i-2].y;
+        let dx2 = puntosNormalizados[i].x - puntosNormalizados[i-1].x;
+        let dy2 = puntosNormalizados[i].y - puntosNormalizados[i-1].y;
+        
+        let angulo1 = Math.atan2(dy1, dx1);
+        let angulo2 = Math.atan2(dy2, dx2);
+        
+        if (Math.abs(angulo2 - angulo1) > 1.2) {
+            cambiosDireccion++;
+        }
+    }
+    
+    // Detectar si es un garabato (demasiados cambios de dirección)
+    let esGarabato = cambiosDireccion > 20;
+    
+    // Patrones basados SOLO en la forma, NO en el tamaño
+    const patrones = {
+        'A': { 
+            minTrazos: 2, 
+            maxTrazos: 10,
+            descripcion: "una A (como un triángulo con una línea en medio)"
+        },
+        'E': { 
+            minTrazos: 2, 
+            maxTrazos: 10,
+            descripcion: "una E (como un peine con tres líneas)"
+        },
+        'I': { 
+            minTrazos: 1, 
+            maxTrazos: 5,
+            descripcion: "una I (una línea recta)"
+        },
+        'O': { 
+            minTrazos: 1, 
+            maxTrazos: 8,
+            descripcion: "una O (un círculo u óvalo)"
+        },
+        'U': { 
+            minTrazos: 1, 
+            maxTrazos: 7,
+            descripcion: "una U (como una curva)"
+        },
+        'M': { 
+            minTrazos: 2, 
+            maxTrazos: 10,
+            descripcion: "una M (como dos montañas)"
+        },
+        'P': { 
+            minTrazos: 2, 
+            maxTrazos: 8,
+            descripcion: "una P (una línea con un círculo arriba)"
+        },
+        'L': { 
+            minTrazos: 2, 
+            maxTrazos: 6,
+            descripcion: "una L (una línea abajo y otra al lado)"
+        },
+        'S': { 
+            minTrazos: 1, 
+            maxTrazos: 8,
+            descripcion: "una S (como una serpiente)"
+        },
+        'T': { 
+            minTrazos: 2, 
+            maxTrazos: 7,
+            descripcion: "una T (una línea arriba y otra abajo)"
+        },
+        'N': { 
+            minTrazos: 2, 
+            maxTrazos: 8,
+            descripcion: "una N (dos líneas conectadas)"
+        },
+        'D': { 
+            minTrazos: 2, 
+            maxTrazos: 8,
+            descripcion: "una D (una línea con un círculo al lado)"
+        },
+        'C': { 
+            minTrazos: 1, 
+            maxTrazos: 6,
+            descripcion: "una C (como una luna)"
+        },
+        'R': { 
+            minTrazos: 2, 
+            maxTrazos: 9,
+            descripcion: "una R (como una P con una pata)"
+        },
+        'B': { 
+            minTrazos: 2, 
+            maxTrazos: 10,
+            descripcion: "una B (como dos barrigas)"
+        }
+    };
+    
+    // Guardar historial
+    userData.historialEscritura.push({
+        letra: letraEsperada,
+        puntos: puntosNormalizados.slice(0, 30),
+        trazos: cambiosDireccion,
+        timestamp: new Date().toISOString()
+    });
+    
+    // CASO 1: Es un garabato (nada que ver)
+    if (esGarabato) {
+        userData.estadisticas.escriturasIncorrectas++;
+        speakText(`Eso es un garabato. Dibuja ${patrones[letraEsperada]?.descripcion || letraEsperada}`);
+        
+        document.getElementById('help-text').textContent = `💡 Dibuja ${letraEsperada} más claramente`;
+        document.getElementById('help-modal').classList.add('show');
+        setTimeout(() => {
+            document.getElementById('help-modal').classList.remove('show');
+        }, 3000);
+        
+        saveProgress();
+        return;
+    }
+    
+    const patron = patrones[letraEsperada];
+    if (!patron) {
+        // Si no hay patrón, asumimos que está bien si no es garabato
+        userData.estadisticas.escriturasCorrectas++;
+        speakText(`¡Bien! Se parece a ${letraEsperada}`);
+        
+        if (!userData.logros.primeraEscritura && userData.estadisticas.escriturasCorrectas >= 1) {
+            userData.logros.primeraEscritura = true;
+            showAchievement("¡Primer ejercicio de escritura! ✍️");
+        }
+        
+        saveProgress();
+        return;
+    }
+    
+    // Verificar solo trazos (forma), NO tamaño
+    let trazosOk = cambiosDireccion >= patron.minTrazos && cambiosDireccion <= patron.maxTrazos;
+    
+    // Calcular puntaje de similitud (0-100) basado en trazos
+    let puntajeTrazos = 0;
+    if (cambiosDireccion < patron.minTrazos) {
+        puntajeTrazos = (cambiosDireccion / patron.minTrazos) * 100;
+    } else if (cambiosDireccion > patron.maxTrazos) {
+        puntajeTrazos = (patron.maxTrazos / cambiosDireccion) * 100;
+    } else {
+        puntajeTrazos = 100;
+    }
+    
+    // DECISIÓN FLEXIBLE - 40% de similitud es suficiente
+    if (puntajeTrazos >= 40) {
+        userData.estadisticas.escriturasCorrectas++;
+        
+        // Feedback según qué tan bien lo hizo
+        if (puntajeTrazos >= 80) {
+            speakText(`¡Excelente! Se parece mucho a ${letraEsperada}`);
+        } else if (puntajeTrazos >= 60) {
+            speakText(`¡Bien! Se parece a ${letraEsperada}`);
+        } else {
+            speakText(`Está bien, se parece un poco a ${letraEsperada}`);
+        }
+        
+        if (!userData.logros.primeraEscritura && userData.estadisticas.escriturasCorrectas >= 1) {
+            userData.logros.primeraEscritura = true;
+            showAchievement("¡Primer ejercicio de escritura! ✍️");
+        }
+        
+        if (userData.estadisticas.escriturasCorrectas === 10 && !userData.logros.escrituraPerfecta) {
+            userData.logros.escrituraPerfecta = true;
+            showAchievement("¡10 escrituras correctas! 🏆");
+        }
+    } else {
+        userData.estadisticas.escriturasIncorrectas++;
+        
+        // Feedback específico según qué falló
+        if (cambiosDireccion < patron.minTrazos) {
+            speakText(`Muy simple. ${letraEsperada} necesita más trazos`);
+        } else if (cambiosDireccion > patron.maxTrazos) {
+            speakText(`Demasiados trazos. Simplifica un poco`);
+        } else {
+            speakText(`Casi, pero no se parece a ${letraEsperada}. Intenta de nuevo`);
+        }
+        
+        document.getElementById('help-text').textContent = `💡 Dibuja ${patron.descripcion}`;
+        document.getElementById('help-modal').classList.add('show');
+        setTimeout(() => {
+            document.getElementById('help-modal').classList.remove('show');
+        }, 3000);
+    }
+    
+    saveProgress();
+}
+
+        // ==================== RECONOCIMIENTO DE VOZ ====================
+        function initSpeechRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.lang = 'es-MX';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                
+                recognition.onresult = function(event) {
+                    const texto = event.results[0][0].transcript;
+                    const confianza = event.results[0][0].confidence;
+                    procesarVoz(texto, confianza);
+                };
+                
+                recognition.onerror = function() {
+                    document.getElementById('modal-result').textContent = "No se pudo reconocer la voz. Intenta de nuevo.";
+                    document.getElementById('modal-result').className = "modal-result error";
+                    document.getElementById('modal-progress-bar').style.width = '0%';
+                    document.getElementById('modal-btn').textContent = "Reintentar";
+                };
+                
+                recognition.onend = function() {
+                    isRecording = false;
+                    document.getElementById('mic-btn').classList.remove('recording');
+                };
+            }
+        }
+
+        function startPronunciation() {
+            if (!recognition) {
+                speakText("Tu navegador no soporta reconocimiento de voz");
+                return;
+            }
+            
+            const leccion = curriculum.modulos[currentModule].lecciones[currentLesson];
+            const textoEsperado = leccion.fonema;
+            
+            document.getElementById('modal-title').textContent = `Pronuncia: ${textoEsperado}`;
+            document.getElementById('modal-icon').textContent = leccion.icono;
+            document.getElementById('modal-result').textContent = "Escuchando...";
+            document.getElementById('modal-result').className = "modal-result";
+            document.getElementById('modal-progress-bar').style.width = '0%';
+            document.getElementById('modal-btn').textContent = "Grabando...";
+            
+            document.getElementById('pronunciation-modal').classList.add('show');
+            document.getElementById('modal-overlay').classList.add('show');
+            
+            speakText(`Pronuncia ${textoEsperado}`);
+            
+            try {
+                recognition.start();
+                isRecording = true;
+                document.getElementById('mic-btn').classList.add('recording');
+                
+                let progreso = 0;
+                const interval = setInterval(() => {
+                    progreso += 10;
+                    document.getElementById('modal-progress-bar').style.width = progreso + '%';
+                    if (progreso >= 100 || !isRecording) {
+                        clearInterval(interval);
+                    }
+                }, 100);
+                
+            } catch (error) {
+                document.getElementById('modal-result').textContent = "Error al iniciar grabación";
+                document.getElementById('modal-btn').textContent = "Cerrar";
+            }
+        }
+
+        function procesarVoz(texto, confianza) {
+            const leccion = curriculum.modulos[currentModule].lecciones[currentLesson];
+            const textoEsperado = leccion.fonema.toUpperCase().trim();
+            const textoUsuario = texto.toUpperCase().trim();
+            
+            userData.estadisticas.practicasPronunciacion++;
+            
+            // Calcular similitud
+            let similitud = 0;
+            if (textoUsuario.includes(textoEsperado) || textoEsperado.includes(textoUsuario)) {
+                similitud = 0.8;
+            } else {
+                let coincidencias = 0;
+                for (let i = 0; i < Math.min(textoUsuario.length, textoEsperado.length); i++) {
+                    if (textoUsuario[i] === textoEsperado[i]) coincidencias++;
+                }
+                similitud = coincidencias / textoEsperado.length;
+            }
+            
+            const esCorrecto = similitud >= 0.6 || confianza > 0.7;
+            
+            userData.historialPronunciacion.push({
+                esperado: textoEsperado,
+                obtenido: textoUsuario,
+                similitud: similitud,
+                confianza: confianza,
+                correcto: esCorrecto,
+                timestamp: new Date().toISOString()
+            });
+            
+            if (esCorrecto) {
+                userData.estadisticas.pronunciacionesCorrectas++;
+                
+                document.getElementById('modal-result').textContent = `¡Excelente! Dijiste "${textoUsuario}" correctamente`;
+                document.getElementById('modal-result').className = "modal-result success";
+                document.getElementById('modal-progress-bar').style.width = '100%';
+                
+                speakText(`¡Muy bien! Has pronunciado correctamente ${textoEsperado}`);
+                
+                if (!userData.logros.primeraPronunciacion) {
+                    userData.logros.primeraPronunciacion = true;
+                    showAchievement("¡Primera pronunciación correcta! 🎤");
+                }
+                
+                if (userData.estadisticas.pronunciacionesCorrectas === 5 && !userData.logros.pronunciacionPerfecta) {
+                    userData.logros.pronunciacionPerfecta = true;
+                    showAchievement("¡5 pronunciaciones correctas! 🏆");
+                }
+            } else {
+                userData.estadisticas.pronunciacionesIncorrectas++;
+                
+                document.getElementById('modal-result').textContent = `Dijiste "${textoUsuario}". Debes decir: ${textoEsperado}`;
+                document.getElementById('modal-result').className = "modal-result error";
+                document.getElementById('modal-progress-bar').style.width = '30%';
+                
+                speakText(`Casi. Escucha: ${leccion.sonido}`);
+            }
+            
+            document.getElementById('modal-btn').textContent = "Cerrar";
+            isRecording = false;
+            document.getElementById('mic-btn').classList.remove('recording');
+            saveProgress();
+        }
+
+        function stopRecording() {
+            if (isRecording && recognition) {
+                recognition.stop();
+            } else {
+                document.getElementById('pronunciation-modal').classList.remove('show');
+                document.getElementById('modal-overlay').classList.remove('show');
+                document.getElementById('modal-btn').textContent = "Comenzar";
+            }
+        }
+
+        // ==================== FUNCIONES DE RESPUESTA ====================
+        function selectOption(index) {
+            selectedOption = index;
+            
+            document.querySelectorAll('.option-item').forEach((item, i) => {
+                if (i === index) {
+                    item.classList.add('selected');
+                    const leccion = curriculum.modulos[currentModule].lecciones[currentLesson];
+                    speakText(`Seleccionaste ${leccion.opciones[index]}`);
+                } else {
+                    item.classList.remove('selected');
+                }
+            });
+        }
+
+        function checkAnswer() {
+            if (selectedOption === null) {
+                speakText("Selecciona una respuesta primero");
+                return;
+            }
+            
+            const leccion = curriculum.modulos[currentModule].lecciones[currentLesson];
+            let correctIndex;
+            
+            if (leccion.tipo === "silaba") {
+                correctIndex = leccion.opciones.indexOf(leccion.silaba);
+            } else if (leccion.tipo === "palabra") {
+                correctIndex = leccion.opciones.indexOf(leccion.palabra);
+            } else {
+                correctIndex = leccion.opciones.indexOf(leccion.letra);
+            }
+            
+            const isCorrect = (selectedOption === correctIndex);
+            const respuestaCorrecta = leccion.opciones[correctIndex];
+            
+            if (isCorrect) {
+                document.querySelectorAll('.option-item')[selectedOption].classList.add('correct');
+                userData.estadisticas.respuestasCorrectas++;
+                userData.progreso.puntosExperiencia += 10;
+                
+                const leccionId = `mod${currentModule}lec${currentLesson}`;
+                if (!userData.progreso.leccionesCompletadas.includes(leccionId)) {
+                    userData.progreso.leccionesCompletadas.push(leccionId);
+                    
+                    if (leccion.tipo === "vocal" || leccion.tipo === "consonante") {
+                        if (!userData.estadisticas.letrasAprendidas.includes(leccion.letra)) {
+                            userData.estadisticas.letrasAprendidas.push(leccion.letra);
+                        }
+                    } else if (leccion.tipo === "palabra") {
+                        if (!userData.estadisticas.palabrasAprendidas.includes(leccion.palabra)) {
+                            userData.estadisticas.palabrasAprendidas.push(leccion.palabra);
+                        }
+                    }
+                    
+                    checkAchievements();
+                }
+                
+                speakText(`¡Muy bien! Es ${respuestaCorrecta}`);
+                updateStars();
+                
+            } else {
+                document.querySelectorAll('.option-item')[selectedOption].classList.add('incorrect');
+                userData.estadisticas.respuestasIncorrectas++;
+                
+                document.querySelector('.learning-area').classList.add('shake');
+                setTimeout(() => {
+                    document.querySelector('.learning-area').classList.remove('shake');
+                }, 500);
+                
+                speakText(`No es correcto. La respuesta era ${respuestaCorrecta}`);
+            }
+            
+            updateProgressDisplay();
+            saveProgress();
+        }
+
+        // ==================== FUNCIONES DE LOGROS ====================
+        function checkAchievements() {
+            const totalLecciones = userData.progreso.leccionesCompletadas.length;
+            const correctas = userData.estadisticas.respuestasCorrectas;
+            
+            if (correctas >= 1 && !userData.logros.primeraLetra) {
+                userData.logros.primeraLetra = true;
+                showAchievement("¡Primera letra aprendida! ⭐");
+            }
+            
+            if (correctas >= 5 && !userData.logros.cincoCorrectas) {
+                userData.logros.cincoCorrectas = true;
+                showAchievement("¡5 respuestas correctas! 🏆");
+            }
+            
+            if (totalLecciones >= 10 && !userData.logros.diezLecciones) {
+                userData.logros.diezLecciones = true;
+                showAchievement("¡10 lecciones completadas! 📚");
+            }
+        }
+
+        function showAchievement(message) {
+            document.getElementById('achievement-message').textContent = message;
+            document.getElementById('achievement-popup').classList.add('show');
+            speakText("¡Logro! " + message);
+            
+            setTimeout(() => {
+                document.getElementById('achievement-popup').classList.remove('show');
+            }, 3000);
+        }
+
+        function updateAchievementsDisplay() {
+            const grid = document.getElementById('achievements-grid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            
+            const achievements = [
+                { icon: '🔤', name: 'Primera Letra', unlocked: userData.logros.primeraLetra },
+                { icon: '🎯', name: '5 Correctas', unlocked: userData.logros.cincoCorrectas },
+                { icon: '📚', name: '10 Lecciones', unlocked: userData.logros.diezLecciones },
+                { icon: '✍️', name: 'Escritura', unlocked: userData.logros.primeraEscritura },
+                { icon: '🎤', name: 'Pronunciación', unlocked: userData.logros.primeraPronunciacion }
+            ];
+            
+            achievements.forEach(ach => {
+                const div = document.createElement('div');
+                div.className = `achievement-item ${ach.unlocked ? 'unlocked' : ''}`;
+                div.setAttribute('onmouseenter', `speakText('${ach.name}')`);
+                div.innerHTML = `
+                    <div class="achievement-icon">${ach.icon}</div>
+                    <div class="achievement-name">${ach.name}</div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        // ==================== FUNCIONES DE AYUDA ====================
+        function askForHelp() {
+            userData.estadisticas.ayudasPedidas++;
+            const leccion = curriculum.modulos[currentModule].lecciones[currentLesson];
+            
+            let hint = `Busca la letra ${leccion.letra || leccion.palabra}. ${leccion.sonido}`;
+            
+            document.getElementById('help-text').textContent = hint;
+            document.getElementById('help-modal').classList.add('show');
+            speakText(hint);
+            
+            setTimeout(() => {
+                document.getElementById('help-modal').classList.remove('show');
+            }, 5000);
+            
+            saveProgress();
+        }
+
+        // ==================== FUNCIONES DE MÓDULOS ====================
+        function initModulesGrid() {
+            const grid = document.getElementById('modules-grid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            
+            curriculum.modulos.forEach((modulo, index) => {
+                const div = document.createElement('div');
+                div.className = `module-item ${index === currentModule ? 'active' : ''}`;
+                div.setAttribute('onclick', `loadModule(${index})`);
+                div.setAttribute('onmouseenter', `speakText('Módulo ${index + 1}: ${modulo.nombre}')`);
+                div.textContent = `Módulo ${index + 1}: ${modulo.nombre}`;
+                grid.appendChild(div);
+            });
+        }
+
+        function updateModulesGrid() {
+            const items = document.querySelectorAll('.module-item');
+            items.forEach((item, index) => {
+                if (index === currentModule) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+                
+                const leccionesModulo = userData.progreso.leccionesCompletadas.filter(l => 
+                    l.startsWith(`mod${index}`)
+                ).length;
+                
+                if (leccionesModulo === curriculum.modulos[index].lecciones.length) {
+                    item.classList.add('completed');
+                }
+            });
+        }
+
+        function loadModule(index) {
+            if (index >= 0 && index < curriculum.modulos.length) {
+                loadLesson(index, 0);
+                toggleModules();
+            }
+        }
+
+        function toggleModules() {
+            const grid = document.getElementById('modules-grid');
+            const arrow = document.getElementById('modules-arrow');
+            
+            if (grid && arrow) {
+                grid.classList.toggle('expanded');
+                arrow.textContent = grid.classList.contains('expanded') ? '▲' : '▼';
+            }
+        }
+
+        // ==================== FUNCIONES DE PROGRESO ====================
+        function updateProgressDisplay() {
+            const totalLecciones = 15;
+            const completadas = userData.progreso.leccionesCompletadas.length;
+            const porcentaje = Math.round((completadas / totalLecciones) * 100);
+            
+            document.getElementById('lessons-completed').textContent = completadas;
+            document.getElementById('correct-count').textContent = userData.estadisticas.respuestasCorrectas;
+            document.getElementById('progress-bar').style.width = porcentaje + '%';
+            
+            document.getElementById('progress-details').textContent = 
+                `Nivel 1 · ${porcentaje}% · ${userData.progreso.puntosExperiencia} pts`;
+        }
+
+        function updateStars() {
+            const correctas = userData.estadisticas.respuestasCorrectas;
+            
+            if (correctas >= 10) {
+                document.getElementById('star1').classList.add('active');
+                document.getElementById('star2').classList.add('active');
+                document.getElementById('star3').classList.add('active');
+            } else if (correctas >= 5) {
+                document.getElementById('star1').classList.add('active');
+                document.getElementById('star2').classList.add('active');
+            } else if (correctas >= 1) {
+                document.getElementById('star1').classList.add('active');
+            }
+        }
+
+        function showProgress() {
+            const completadas = userData.progreso.leccionesCompletadas.length;
+            const correctas = userData.estadisticas.respuestasCorrectas;
+            const totalRespuestas = correctas + userData.estadisticas.respuestasIncorrectas;
+            const porcentaje = totalRespuestas > 0 ? Math.round((correctas / totalRespuestas) * 100) : 0;
+            
+            speakText(`Has completado ${completadas} lecciones con ${correctas} respuestas correctas. ${porcentaje}% de aciertos.`);
+        }
+
+        function showAchievements() {
+            const logros = Object.values(userData.logros).filter(v => v === true).length;
+            speakText(`Tienes ${logros} logros desbloqueados`);
+        }
+
+        function speakProgress() {
+            showProgress();
+        }
+
+        // ==================== FUNCIONES DE REFUERZO ====================
+        function initReinforcementGrid() {
+            const grid = document.getElementById('reinforcement-grid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            
+            const refuerzos = [
+                { mod: 0, lec: 0, icon: '🍎', name: 'A' },
+                { mod: 0, lec: 1, icon: '🐘', name: 'E' },
+                { mod: 0, lec: 2, icon: '🐜', name: 'I' },
+                { mod: 1, lec: 0, icon: '👩', name: 'M' },
+                { mod: 1, lec: 1, icon: '👨', name: 'P' },
+                { mod: 2, lec: 0, icon: '🍊', name: 'N' }
+            ];
+            
+            refuerzos.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'reinforcement-item';
+                div.setAttribute('onclick', `loadLesson(${item.mod}, ${item.lec})`);
+                div.setAttribute('onmouseenter', `speakText('Repasar ${item.name}')`);
+                div.innerHTML = `
+                    <div class="reinforcement-icon">${item.icon}</div>
+                    <div class="reinforcement-text">${item.name}</div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        function repeatLesson() {
+            loadLesson(currentModule, currentLesson);
+        }
+
+        function nextLesson() {
+            if (currentLesson < curriculum.modulos[currentModule].lecciones.length - 1) {
+                loadLesson(currentModule, currentLesson + 1);
+            } else if (currentModule < curriculum.modulos.length - 1) {
+                loadLesson(currentModule + 1, 0);
+            } else {
+                speakText("¡Felicidades! Has completado todas las lecciones");
+            }
+        }
+
+        // ==================== FUNCIONES DE GUARDADO ====================
+        function saveProgress() {
+            userData.metadata.ultimaSesion = new Date().toISOString();
+            localStorage.setItem('mercadoRural_v5', JSON.stringify(userData));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('mercadoRural_v5');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    userData = parsed;
+                    currentModule = userData.progreso.moduloActual || 0;
+                    currentLesson = userData.progreso.leccionActual || 0;
+                } catch (e) {
+                    console.log("Error cargando datos");
+                }
+            }
+        }
+
+        // ==================== FUNCIONES JSON ====================
+        function exportarProgreso() {
+            const exportData = {
+                ...userData,
+                metadata: {
+                    ...userData.metadata,
+                    fechaExportacion: new Date().toISOString()
+                }
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', `progreso_${new Date().toISOString().slice(0,10)}.json`);
+            linkElement.click();
+            
+            speakText("Progreso exportado");
+        }
+
+        function importarProgreso() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = function(event) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    try {
+                        const importedData = JSON.parse(e.target.result);
+                        userData = importedData;
+                        localStorage.setItem('mercadoRural_v5', JSON.stringify(userData));
+                        
+                        currentModule = userData.progreso.moduloActual || 0;
+                        currentLesson = userData.progreso.leccionActual || 0;
+                        
+                        loadLesson(currentModule, currentLesson);
+                        updateProgressDisplay();
+                        updateAchievementsDisplay();
+                        updateStars();
+                        updateModulesGrid();
+                        
+                        speakText("Progreso importado correctamente");
+                    } catch (error) {
+                        speakText("Error al importar el archivo");
+                    }
+                };
+                
+                reader.readAsText(file);
+            };
+            
+            input.click();
+        }
+
+        function addJsonButtons() {
+            const headerIcons = document.querySelector('.header-icons');
+            if (!headerIcons) return;
+            
+            const exportBtn = document.createElement('div');
+            exportBtn.className = 'header-icon';
+            exportBtn.innerHTML = '📥';
+            exportBtn.setAttribute('onclick', 'exportarProgreso()');
+            exportBtn.setAttribute('onmouseenter', 'speakText("Exportar progreso como JSON")');
+            
+            const importBtn = document.createElement('div');
+            importBtn.className = 'header-icon';
+            importBtn.innerHTML = '📤';
+            importBtn.setAttribute('onclick', 'importarProgreso()');
+            importBtn.setAttribute('onmouseenter', 'speakText("Importar progreso desde JSON")');
+            
+            headerIcons.appendChild(exportBtn);
+            headerIcons.appendChild(importBtn);
+        }
+
+        // Inicializar cuando cargue la página
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+            setTimeout(addJsonButtons, 500);
+            
+            setTimeout(() => {
+                if (document.getElementById('app-container').style.display !== 'block') {
+                    speakText("Bienvenida. Toca la pantalla para comenzar");
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
